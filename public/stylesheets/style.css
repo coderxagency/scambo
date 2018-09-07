@@ -1,0 +1,46 @@
+/** Global css stylesheet **/
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
+* {
+    font-size: 14px;
+    font-family: 'Acme', sans-serif;
+    margin: 0;
+}
+
+.navbar.top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(253, 234, 219, 0.89);
+}
+.navbar.top .container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 1em 5em;
+}
+.navbar-header {
+    
+}
+.nav.navbar-nav {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    right: 5em;
+}
+.nav.navbar-nav .navitem{
+    padding-right: 1em; 
+}
+
+.bodyContent {
+    padding-top: 5em;
+}
+
+.foot {
+    position: absolute;
+    bottom: 0;
+}
+
+.errMsg {
+    color: #ee0000;
+}

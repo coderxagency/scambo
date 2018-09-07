@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ./partials/head %>
+  </head>
+  <body>
+    <header class="header">
+        <% include ./partials/header %>
+    </header>
+
+    <main class="bodyContent">
+        <h1>Signup</h1>
+        <form action="/users/signup" method="post"><br>
+            Nome: <input type="text" name="name" required><br>
+            Sobrenome: <input type="text" name="lastname" required><br>
+            Username: <input type="text" name="username"required><br>
+            E-mail: <input type="email" name="email" required><br>
+            Password: <input type="password" name="password" required>
+            <br>
+            <input type="submit" value="Cadastrar">
+        </form>
+        <% if(message) { %>
+            <p class="errMsg">
+                <label>
+                    <% message %>
+                </label>
+            </p>
+        <% } %>
+    </main>
+    
+    <footer class="foot">
+        <% include ./partials/footer %>
+    </footer>
+
+    <% include ./partials/scripts %>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ./partials/head %>
+  </head>
+  <body>
+    <header class="header">
+        <% include ./partials/header %>
+    </header>
+
+    <main class="bodyContent">
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username" required/> <br>
+            <input type="password" name="password" placeholder="Password" required/> <br>
+            <input type="submit" value="Login" /> <br>
+        </form>
+        <% if(message) { %>
+            <p>
+                <label class="errorMsg">
+                    <%= massage %>
+                </label>
+            </p>
+        <% } %>
+        <p><a href="/users/forgot">Esqueceu sua senha?</a> | <a href="/users/signup">Cadastrar</a></p>
+    </main>
+    
+    <footer class="foot">
+        <% include ./partials/footer %>
+    </footer>
+
+    <% include ./partials/scripts %>
+  </body>
+</html>

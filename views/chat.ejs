@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+    <link rel="stylesheet" href="/stylesheets/chatstyle.css">
+</head>
+<body>
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <main class="bodyContent">
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" />
+            <button>Send</button>
+        </form>
+    </main>
+    <footer class="foot">
+        <% include ./partials/footer %>
+    </footer>
+    
+
+    <% include ./partials/chatscripts %>
+</body>
+</html>
