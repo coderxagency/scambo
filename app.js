@@ -3,7 +3,7 @@ require('dotenv-safe').config({
 })
 const passport = require('passport');
 const session = require('express-session');
-const MySQLStore = require('connect-mysql')(session);
+const MySQLStore = require('express-mysql-session')(session);
 
 var createError = require('http-errors');
 var express = require('express');
@@ -13,8 +13,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-let db = require('./mysql');
 
 var app = express();
 
@@ -33,19 +31,24 @@ app.use('/users', usersRouter);
 
 require('./authentication/auth')(passport);
 
+var options = {
+  host: 'localhost',
+  port: 3306,
+  user: 'eduardo',
+  password: 'password',
+  database: 'mydb'
+};
+
+var sessionStore = new MySQLStore(options);
+
 app.use(session({
-  secret: '12345678', //configura o segredo,
-  store: new MySQLStore({
-    config: {
-      database: process.env.DB_DATABASE,
-      user: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      keepalive: 30 * 60 //30 minutos de sessão
-    }
-  }),
+  key: 'myapp',
+  secret: '12345678',
+  store: sessionStore,
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

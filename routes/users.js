@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let moment = require('moment');
-
-let db = require('../mysql');
+const userModelo = require('../models/usersmodels')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -17,18 +16,20 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  let created_at = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
-  let updated_at = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
-  let name = req.body.name;
-  let lastname = req.body.lastname;
-  let email = req.body.email;
-  let username = req.body.username;
-  let password = req.body.password;
-
-  db.createUser(name, lastname, email, username, password, created_at, updated_at, (err, result) => {
-    if (err) res.redirect('/signup?fail=true');
-    res.redirect('/');
-  });
+    let values = {
+        name: req.body.name,
+        lastname: req.body.name,
+        email:  req.body.email, 
+        username: req.body.username, 
+        password: req.body.password, 
+        created_at: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"), 
+        updated_at: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+    };
+    userModelo.createUser(values).then(result => {
+        if(result != true) res.redirect('/signup?fail=true');
+        res.redirect('/');
+    
+    });  
 });
 
 router.get('/profile', function(req, res) {
