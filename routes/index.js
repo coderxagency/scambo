@@ -23,7 +23,7 @@ router.post('/login',
   })
 )
 
-router.get('/chat', authenticationMiddleware (), function(req, res) {
+router.get('/chat', authenticationMiddleware(), function(req, res) {
   res.render('chat', { 
     title: 'ChatApp', 
     username: req.user.username
@@ -31,7 +31,7 @@ router.get('/chat', authenticationMiddleware (), function(req, res) {
 });
 
 
-function authenticationMiddleware () {
+function authenticationMiddleware() {
   return function(req, res, next) {
     if (req.isAuthenticated()){
       return next()

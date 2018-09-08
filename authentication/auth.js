@@ -1,21 +1,23 @@
 const bcrypt = require('bcrypt')
-const Passport = require('passport')
-const localStrategy = require('passport-local').Strategy
+const passport = require('passport')
+const localStrategy = require('passport-local').Strategy;
 let db = require('../mysql')
 
 module.exports = function(passport) {
+    
     function findUser(username, callback){
-        db.query("SELECT username FROM users WHERE username="+username, (err, res, fields) => {
-            callback(err, res);
+        let sql = `SELECT * FROM users WHERE username='${username}'`
+        db.query(sql, (err, res, fields) => {
+            callback(err, res[0]);
         });
         db.end();
     }
 
     function findUserById(id, callback) {
-        db.query("SELECT id FROM users WHERE ID="+id, (err, res, fields) => {
-            callback(err, res);
+        db.query(`SELECT id FROM users WHERE ID=${id}`, (err, res, fields) => {
+            callback(err, res[0]);
         });
-        db.end();
+        db.end();y
     }
 
     passport.serializeUser((user, done) => {
@@ -37,8 +39,8 @@ module.exports = function(passport) {
                 if (err) {return done(err)}
                 //usuário inexistente
                 if(!user) { return done(null, false)}
-                
-                bcrypt.compare(passport, user.password, (err, isValid) => {
+
+                bcrypt.compare(password, user.password, (err, isValid) => {
                     if (err) { return done(err) }
                     if (!isValid) { return done(null, false) }
                     return done(null, user)

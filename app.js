@@ -1,6 +1,7 @@
 require('dotenv-safe').config({
   allowEmptyValues: true
 })
+var cookieSession = require('cookie-session')
 const passport = require('passport');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
@@ -32,11 +33,11 @@ app.use('/users', usersRouter);
 require('./authentication/auth')(passport);
 
 var options = {
-  host: 'localhost',
-  port: 3306,
-  user: 'eduardo',
-  password: 'password',
-  database: 'mydb'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT
 };
 
 var sessionStore = new MySQLStore(options);
@@ -45,12 +46,18 @@ app.use(session({
   key: 'myapp',
   secret: '12345678',
   store: sessionStore,
-  resave: false,
-  saveUninitialized: false
+  resave: true,
+  saveUninitialized: true
 }));
-
+// init Cookies:
+app.use(cookieSession({
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      keys: ['12345678']
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
